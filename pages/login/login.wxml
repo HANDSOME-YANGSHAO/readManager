@@ -1,0 +1,35 @@
+<view class="main">
+
+
+  <view class="login">
+
+    <view class="kuang shadow">
+      <view class="hint">登陆界面</view>
+      <open-data class="avatar-open" type="userAvatarUrl"></open-data>
+
+      <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
+        <van-radio name="0">学生</van-radio>
+        <van-radio name="1">老师</van-radio>
+      </van-radio-group>
+
+      <view class="form-group">
+        <view class="title">账号：</view>
+        <input placeholder="账号" bindinput="onAccountInput" maxlength="30" placeholder-class="phc" value="{{account}}"></input>
+      </view>
+
+      <view class="form-group">
+        <view class="title">密码：</view>
+        <input placeholder="密码" bindinput="onPasswordInput" maxlength="30" type="password" placeholder-class="phc" value="{{password}}"></input>
+      </view>
+
+      <button class="btn" bindtap="onLogin">点击登录</button>
+      <view bindtap="onReturn" class="return">返回</view>
+    </view>
+
+  </view>
+
+  <view class="bottom">
+
+  </view>
+
+</view>

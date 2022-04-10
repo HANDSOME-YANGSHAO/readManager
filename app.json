@@ -1,14 +1,49 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/communication/communication",
+    "pages/bookshelf/bookshelf",
+    "pages/task/task",
+    "pages/info/info",
     "pages/index/index",
     "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "中学生课外阅读监管系统",
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "tabBar": {
+    "color": "#333",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/communication/communication",
+        "text": "交流",
+        "iconPath": "assets/img/交流.png",
+        "selectedIconPath": "assets/img/交流激活.png"
+      },
+      {
+        "pagePath": "pages/bookshelf/bookshelf",
+        "text": "书库",
+        "iconPath": "assets/img/书库.png",
+        "selectedIconPath": "assets/img/书库激活.png"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "text": "任务",
+        "iconPath": "assets/img/task.png",
+        "selectedIconPath": "assets/img/task_active.png"
+      },
+      {
+        "pagePath": "pages/info/info",
+        "text": "信息",
+        "iconPath": "assets/img/info.png",
+        "selectedIconPath": "assets/img/info_active.png"
+      }
+    ]
+  }
 }
