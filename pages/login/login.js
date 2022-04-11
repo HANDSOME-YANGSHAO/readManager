@@ -46,19 +46,13 @@ Page({
       }
       if (res) {
         wx.setStorageSync('userInfo', res)
-        app.globalData = res
+        app.globalData.userInfo = res
         FN.Toast("登陆成功!", 1)
         wx.switchTab({
           url: '/pages/bookshelf/bookshelf'
         })
       }
     }
-  },
-  // 返回事件
-  onReturn() {
-    wx.navigateBack({
-      delta: 1
-    })
   },
   // 双向绑定
   onAccountInput(e) {

@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/bookshelf/bookshelf",
     "pages/login/login",
     "pages/communication/communication",
-    "pages/bookshelf/bookshelf",
     "pages/task/task",
     "pages/info/info",
     "pages/index/index",

@@ -1,0 +1,41 @@
+<view class="bookshelf-container">
+
+  <!-- 搜索框 -->
+  <van-search bind:change="searchInput" bind:search="search" model:value="{{ searchInput }}" placeholder="请输入书本名称" shape="round" input-align="center" />
+
+  <van-tabs bind:click="onTabClick" sticky swipeable animated>
+    <!-- 书架 -->
+    <van-tab title="书架">
+      <view class="book-container">
+        <view class="book-item" wx:for="{{ allBook }}" wx:key="bookId">
+          <image class="cover" src="{{ item.coverSrc }}">
+          </image>
+          <view class="title">{{ item.bookName }}</view>
+        </view>
+      </view>
+    </van-tab>
+    <!-- 班级书单 -->
+    <van-tab title="班级书单">
+      <view class="class-booklist">
+        <view class="class-item" wx:for="{{ classBookList }}" wx:key="classId" wx:for-item="item">
+          <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;">
+            {{ item.className }}
+          </van-divider>
+          <view class="book-container">
+            <view class="book-item" wx:for="{{ item.bookList }}" wx:for-item="childItem" wx:key="bookId">
+              <image class="cover" src="{{ childItem.coverSrc }}">
+              </image>
+              <view class="title">{{ childItem.bookName }}</view>
+            </view>
+            <view class="book-item">
+              <view class="add">
+                <van-icon name="plus" size="25px"/>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </van-tab>
+  </van-tabs>
+
+</view>

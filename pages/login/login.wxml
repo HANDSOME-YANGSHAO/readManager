@@ -23,7 +23,6 @@
       </view>
 
       <button class="btn" bindtap="onLogin">点击登录</button>
-      <view bindtap="onReturn" class="return">返回</view>
     </view>
 
   </view>

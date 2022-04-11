@@ -43,13 +43,6 @@
 	text-align: center;
 }
 
-.main .login .kuang .return {
-	width: 100%;
-	color: #1296db;
-	font-size:30rpx;
-	text-align: center;
-	font-size:26rpx;
-}
 
 .main .avatar-open {
 	width: 180rpx;

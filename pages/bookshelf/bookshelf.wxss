@@ -1,1 +1,56 @@
-/* pages/bookshelf/bookshelf.wxss */
+.bookshelf-container {
+  --tabs-bottom-bar-color: #1296db;
+}
+
+.tabs {
+  width: 25%;
+}
+
+.van-tabs {
+  width: 100%;
+}
+
+/* 书本列表 */
+
+.book-container {
+  margin-top: 50rpx;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.book-item {
+  width: 200rpx;
+  height: 340rpx;
+  margin: 10rpx 25rpx;
+}
+
+.cover {
+  width: 200rpx;
+  height: 290rpx;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 30rpx;
+  height: 60rpx;
+  text-align: center;
+  vertical-align: center;
+}
+
+.add {
+  width: 200rpx;
+  height: 290rpx;
+  border: 1rpx solid #787878ab;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 班级列表 */
+.class-booklist {
+  margin-top: 50rpx;
+}
+.class-item {
+  margin-top: 100rpx;
+}
