@@ -28,13 +28,16 @@
               <view class="title">{{ childItem.bookName }}</view>
             </view>
             <view class="book-item">
-              <view class="add">
-                <van-icon name="plus" size="25px"/>
+              <view class="add" bindtap="addBook" data-classid="{{ item.classId }}">
+                <van-icon name="plus" size="25px" />
               </view>
             </view>
           </view>
         </view>
       </view>
+      <van-popup round show="{{ addPopShow }}" position="bottom" custom-style="height: 50vh;" bind:close="onPopClose">
+        <van-picker show-toolbar title="添加书籍" columns="{{ allBook }}" bind:cancel="onCancel" bind:confirm="onConfirm" visible-item-count="4" value-key="bookName"/>
+      </van-popup>
     </van-tab>
   </van-tabs>
 

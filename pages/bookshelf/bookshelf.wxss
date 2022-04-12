@@ -9,7 +9,9 @@
 .van-tabs {
   width: 100%;
 }
-
+.van-button__text{
+  color: #1296db;
+}
 /* 书本列表 */
 
 .book-container {
@@ -36,6 +38,9 @@
   height: 60rpx;
   text-align: center;
   vertical-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .add {
@@ -47,10 +52,13 @@
   justify-content: center;
   align-items: center;
 }
+
 /* 班级列表 */
+
 .class-booklist {
   margin-top: 50rpx;
 }
+
 .class-item {
   margin-top: 100rpx;
 }
