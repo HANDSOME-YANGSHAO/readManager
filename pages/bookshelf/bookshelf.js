@@ -1,4 +1,6 @@
 const FN = require("../../publicFn/public")
+const app = getApp()
+
 Page({
 
   /**
@@ -10,7 +12,14 @@ Page({
     allBook: [],
     classBookList: [],
     addPopShow: false,
-    currentClassId: ''
+    currentClassId: '',
+    isTeacher: false
+  },
+  /* 前往书籍详情界面 */
+  goToBook() {
+    wx.navigateTo({
+      url: '/pages/reader/reader?bookId=10'
+    })
   },
   /* 取消添加书籍 */
   onCancel() {
@@ -20,10 +29,13 @@ Page({
   },
   /* 添加书籍确认 */
   onConfirm(e) {
-    const { value, index } = e.detail;
+    const {
+      value,
+      index
+    } = e.detail;
     console.log(this.data.allBook[index].bookId, this.data.currentClassId)
     console.log('根据书本id 和 班级id 去添加选中书籍到选中班级的书单')
-    FN.Toast(`添加成功`);
+    FN.Toast(`添加成功`, 1);
   },
   /* 搜索 */
   search() {
@@ -55,63 +67,84 @@ Page({
   },
   /* 页面初始化 */
   init() {
-    console.log('发送请求，获取书架列表')
-    console.log('发送请求，根据老师id请求班级书单列表')
-    // 请求过来的假数据
-    this.setData({
-      allBook: [{
-          bookId: '10',
-          coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/173/926173/t6_926173.jpg',
-          bookName: '红楼梦'
-        },
-        {
-          bookId: '11',
-          coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/509/787509/t6_787509.jpg',
-          bookName: '钢铁是怎么炼成的'
-        },
-        {
-          bookId: '12',
-          coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
-          bookName: '简爱'
-        },
-        {
-          bookId: '13',
-          coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
-          bookName: '三国演义'
-        }
-      ],
-      classBookList: [{
-          classId: '04031802',
-          className: "二年级三班",
-          bookList: [{
-              bookId: '12',
-              coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
-              bookName: '简爱'
-            },
-            {
-              bookId: '13',
-              coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
-              bookName: '三国演义'
-            }
-          ]
-        },
-        {
-          classId: '04031804',
-          className: "一年级五班",
-          bookList: [{
-              bookId: '10',
-              coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/173/926173/t6_926173.jpg',
-              bookName: '红楼梦'
-            },
-            {
-              bookId: '11',
-              coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/509/787509/t6_787509.jpg',
-              bookName: '钢铁是怎么炼成的'
-            }
-          ]
-        },
-      ]
-    })
+    if (app.globalData.userInfo.role === '0') {
+      console.log('发送请求，获取书架列表')
+      console.log('发送请求，根据老师id请求班级书单列表')
+      // 请求过来的假数据
+      this.setData({
+        // 老师数据
+        allBook: [{
+            bookId: '10',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/173/926173/t6_926173.jpg',
+            bookName: '红楼梦'
+          },
+          {
+            bookId: '11',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/509/787509/t6_787509.jpg',
+            bookName: '钢铁是怎么炼成的'
+          },
+          {
+            bookId: '12',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
+            bookName: '简爱'
+          },
+          {
+            bookId: '13',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
+            bookName: '三国演义'
+          }
+        ],
+        classBookList: [{
+            classId: '04031802',
+            className: "二年级三班",
+            bookList: [{
+                bookId: '12',
+                coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
+                bookName: '简爱'
+              },
+              {
+                bookId: '13',
+                coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
+                bookName: '三国演义'
+              }
+            ]
+          },
+          {
+            classId: '04031804',
+            className: "一年级五班",
+            bookList: [{
+                bookId: '10',
+                coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/173/926173/t6_926173.jpg',
+                bookName: '红楼梦'
+              },
+              {
+                bookId: '11',
+                coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/509/787509/t6_787509.jpg',
+                bookName: '钢铁是怎么炼成的'
+              }
+            ]
+          },
+        ],
+        isTeacher: true
+      })
+    } else {
+      console.log('根据班级号发送请求，获得班级书单列表');
+      this.setData({
+        // 学生数据
+        classBookShelf: [{
+            bookId: '12',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
+            bookName: '简爱'
+          },
+          {
+            bookId: '13',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
+            bookName: '三国演义'
+          }
+        ],
+        isTeacher: false
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载

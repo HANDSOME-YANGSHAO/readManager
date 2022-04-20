@@ -6,7 +6,8 @@
     "pages/task/task",
     "pages/info/info",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/reader/reader"
   ],
   "window": {
     "backgroundTextStyle": "light",
