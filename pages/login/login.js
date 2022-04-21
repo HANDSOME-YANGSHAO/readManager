@@ -38,7 +38,7 @@ Page({
       console.log("发送登陆请求！")
       const res = {
         userId: "1",
-        role: "1",
+        role: this.data.radio,
         account: "2018211822",
         userName: "李昊洋",
         classNum: "04031802",

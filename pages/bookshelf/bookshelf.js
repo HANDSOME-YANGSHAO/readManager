@@ -67,7 +67,7 @@ Page({
   },
   /* 页面初始化 */
   init() {
-    if (app.globalData.userInfo.role === '0') {
+    if (app.globalData.userInfo.role === '1') {
       console.log('发送请求，获取书架列表')
       console.log('发送请求，根据老师id请求班级书单列表')
       // 请求过来的假数据

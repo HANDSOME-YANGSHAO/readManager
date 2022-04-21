@@ -12,7 +12,7 @@ Page({
     cpContent: '',
     currentIndex: 0, //当前章节
     currentTitle: '',
-    showPage: true, //请求到数据显示界面
+    showPage: false, //请求到数据显示界面
     clientWidth: "",
     clientHeight: "",
     winHeight: "", //窗口高度
@@ -46,12 +46,17 @@ Page({
 
   showChapter: function() {
     this.setData({
-      showChapter: !this.data.showChapter
+      showChapter: !this.data.showChapter,
+      scrollTop: 0
     });
   },
 
   pickChapter(e) {
-    console.log(e);
+    console.log(`根据章节id:${this.data.chapterList[e.currentTarget.dataset.currentindex].chapterId}发送请求获取章节内容`);
+    this.getChapterContent(this.data.chapterList[e.currentTarget.dataset.currentindex].chapterId, e.currentTarget.dataset.currentindex);
+    this.setData({
+      showChapter: false
+    })
   },
 
   getScrollTop: function (event) {  //设置读取到文章的具体什么位置
@@ -166,6 +171,10 @@ Page({
     if (this.data.chapterList[this.data.currentIndex]) {
       this.getChapterContent(this.data.chapterList[this.data.currentIndex].chapterId, this.data.currentIndex);
     }
+    wx.setStorage({
+      key:"bookshelfData",
+      data:"value"
+    })
   },
 
   goNext: function() {
@@ -247,6 +256,10 @@ Page({
       }
     });
 
+    // 请求到数据显示页面
+    this.setData({
+      showPage: true
+    })
   },
   /**
    * 生命周期函数--监听页面加载

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/bookshelf/bookshelf",
     "pages/login/login",
+    "pages/bookshelf/bookshelf",
     "pages/communication/communication",
     "pages/task/task",
     "pages/info/info",
