@@ -1,7 +1,6 @@
 // app.js
 App({
   onLaunch() {
-
     // 检验是否有本地缓存数据
     if (wx.getStorageSync('userInfo')) {
       this.globalData.userInfo = wx.getStorageSync('userInfo')

@@ -5,21 +5,27 @@
 
     <view class="kuang shadow">
       <view class="hint">登陆界面</view>
-      <open-data class="avatar-open" type="userAvatarUrl"></open-data>
+      <!-- <open-data class="avatar-open" type="userAvatarUrl"></open-data> -->
+      <image wx:if="{{ radio === '0' }}" src="../../assets/img/student.jpeg" class="avatar-open"></image>
+      <image wx:if="{{ radio === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatar-open"></image>
+      <image wx:if="{{ radio === '2' }}" src="../../assets/img/teacher.jpeg" class="avatar-open"></image>
 
       <van-radio-group value="{{ radio }}" bind:change="onChange" direction="horizontal">
         <van-radio name="0">学生</van-radio>
-        <van-radio name="1">老师</van-radio>
+        <van-radio name="1">班干部</van-radio>
+        <van-radio name="2">老师</van-radio>
       </van-radio-group>
-
+      
       <view class="form-group">
         <view class="title">账号：</view>
-        <input placeholder="账号" bindinput="onAccountInput" maxlength="30" placeholder-class="phc" value="{{account}}"></input>
+        <input placeholder="账号" bindinput="onAccountInput" maxlength="30" placeholder-class="phc"
+          value="{{account}}"></input>
       </view>
 
       <view class="form-group">
         <view class="title">密码：</view>
-        <input placeholder="密码" bindinput="onPasswordInput" maxlength="30" type="password" placeholder-class="phc" value="{{password}}"></input>
+        <input placeholder="密码" bindinput="onPasswordInput" maxlength="30" type="password" placeholder-class="phc"
+          value="{{password}}"></input>
       </view>
 
       <button class="btn" bindtap="onLogin">点击登录</button>

@@ -1,2 +1,167 @@
-<!--pages/task/task.wxml-->
-<text>pages/task/task.wxml</text>
+<view class="task-container">
+
+  <!-- 老师 -->
+  <view wx:if="{{ isTeacher }}">
+
+    <van-dropdown-menu active-color="#1989fa">
+      <van-dropdown-item value="{{ statusValue }}" options="{{ taskOption }}" bind:change="statusChange" />
+    </van-dropdown-menu>
+    <van-cell title="点击发布阅读任务" bindtap="onClickShow">
+      <van-icon slot="right-icon" name="plus" class="custom-icon" />
+    </van-cell>
+    <!-- 任务列表 -->
+    <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc(100vh - 94px)'
+      class="taskList">
+      <view class="taskList-item" wx:if="{{ showTaskItem }}" wx:for="{{ taskList }}" wx:key="taskId">
+        <view class="item-body">
+          <view class="body_left">
+            <view class="book-item" data-bookid="{{ item.bookInfo.bookId }}" bindtap="goToBook">
+              <image class="cover" src="{{ item.bookInfo.coverSrc }}">
+              </image>
+              <view class="title">{{ item.bookInfo.bookName }}</view>
+            </view>
+          </view>
+          <view class="body_right">
+            <van-cell-group>
+              <van-field placeholder="{{ item.classInfo.className }}" placeholder-style="color: black;" readonly
+                label="班级" />
+              <van-field placeholder="{{ item.doneNum }}" placeholder-style="color: black;" readonly label="已完成人数" />
+              <van-field placeholder="{{ item.toDoNum }}" placeholder-style="color: black;" readonly label="未完成人数" />
+              <van-field type="textarea" placeholder-style="color: black;" autosize="{{ minDateTextHeight }}"
+                placeholder="{{ item.endTime }}" readonly label="截止日期" />
+            </van-cell-group>
+          </view>
+        </view>
+        <view class="item-foot">
+          <van-field type="textarea" autosize="{{ minDateTextHeight }}" value="{{ item.remarks }}" readonly
+            label="详情" />
+          <view class="button_group">
+            <van-button size="small" round type="info" data-taskid="{{ item.taskId }}" bindtap="goToClassTask">查看
+            </van-button>
+            <van-button size="small" round type="danger" data-taskid="{{ item.taskId }}" bindtap="deleteTask">删除
+            </van-button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 发布阅读任务的遮罩层 -->
+    <van-overlay show="{{ showAddPage }}">
+      <view class="wrapper">
+        <view class="card">
+
+          <view class="card-header">
+            <van-icon class="icon" name="cross" bindtap="onClickHide" />
+          </view>
+
+          <van-cell title="选择班级" value="{{ addTaskForm.classInfo.className }}" arrow-direction="down"
+            bind:click="onSelectClass" />
+          <van-cell title="选择书籍" value="{{ addTaskForm.bookInfo.bookName }}" arrow-direction="down"
+            bind:click="onSelectBook" />
+          <van-cell title="截至时间" value="{{ endTime }}" arrow-direction="down" bind:click="onSelectTime" />
+          <van-cell-group class="remarks">
+            <van-field bind:input="remarksInput" value="{{ addTaskForm.remarks }}" label="任务详情" type="textarea"
+              placeholder="请输入任务详情" autosize border="{{ false }}" />
+          </van-cell-group>
+          <view class="submitTask">
+            <van-button type="primary" class="submitButton" color="#1989FA" block round bindtap="onSubmitTask">发布阅读任务
+            </van-button>
+          </view>
+
+          <van-popup show="{{ popShow }}" round position="bottom" custom-style="height: 50%;" bind:close="popClose">
+            <van-picker wx:if="{{ isClassPicker }}" show-toolbar title="选择班级" columns="{{ classList }}"
+              bind:cancel="onClassCancel" bind:confirm="onClassConfirm" visible-item-count="5" value-key="className" />
+            <van-picker wx:else show-toolbar title="选择班级" columns="{{ classBookList }}" bind:cancel="onSelectBookCancel"
+              bind:confirm="onBookConfirm" visible-item-count="5" value-key="bookName" />
+          </van-popup>
+
+          <van-popup show="{{ timePopShow }}" round position="bottom" custom-style="height: 50%;"
+            bind:close="timePopClose">
+            <van-datetime-picker type="datetime" min-date="{{ minDate }}" value="{{ addTaskForm.endTime }}"
+              bind:confirm="onTimeConfirm" />
+          </van-popup>
+        </view>
+      </view>
+
+    </van-overlay>
+
+    <!-- 提示对话框 -->
+    <van-dialog use-slot title="是否删除该任务？" show="{{ dialogShow }}" show-cancel-button bind:confirm="onDialogConfirm"
+      bind:cancel="onDialogCancel">
+    </van-dialog>
+
+  </view>
+
+  <!-- 学生 -->
+  <view wx:else>
+    <van-tabs bind:click="onTabClick" swipeable>
+      <van-tab title="进行中">
+      </van-tab>
+      <van-tab title="已截止">
+      </van-tab>
+    </van-tabs>
+    <!-- 任务列表 -->
+    <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 44px)'
+      class="taskList">
+      <view class="taskList-item" wx:if="{{ showTaskItem }}" wx:for="{{ taskList }}" wx:key="taskId">
+        <view class="item-body">
+          <view class="body_left">
+            <view class="book-item" data-bookid="{{ item.bookInfo.bookId }}" bindtap="goToBook">
+              <image class="cover" src="{{ item.bookInfo.coverSrc }}">
+              </image>
+              <view class="title">{{ item.bookInfo.bookName }}</view>
+            </view>
+          </view>
+          <view class="body_right">
+            <van-cell-group>
+              <van-field placeholder="{{ item.classInfo.className }}" placeholder-style="color: black;" readonly
+                label="班级" />
+              <van-field placeholder="{{ item.doneNum }}" placeholder-style="color: black;" readonly label="已完成人数" />
+              <van-field placeholder="{{ item.toDoNum }}" placeholder-style="color: black;" readonly label="未完成人数" />
+              <van-field type="textarea" placeholder-style="color: black;" autosize="{{ minDateTextHeight }}"
+                placeholder="{{ item.endTime }}" readonly label="截止日期" />
+            </van-cell-group>
+          </view>
+        </view>
+        <view class="item-foot">
+          <!-- 班干部 -->
+          <van-collapse wx:if="{{ isClassCadre }}" value="{{ activeNames }}" bind:change="toDoListOpen">
+            <van-collapse-item title="未完成名单" name="{{ index }}">
+              <view class="nameList">
+                <text class="studentName" wx:for="{{ item.toDoList }}" wx:key="userId">{{ item.userName }};</text>
+              </view>
+            </van-collapse-item>
+          </van-collapse>
+          <van-field type="textarea" autosize="{{ minDateTextHeight }}" value="{{ item.remarks }}" readonly
+            label="详情" />
+
+          <view class="button_group" wx:if="{{ !statusValue }}">
+            <van-button class="btn-item" size="small" type="info" data-bookid="{{ item.bookInfo.bookId }}"
+              bindtap="goToBook">开始阅读
+            </van-button>
+            <van-button class="btn-item" size="small" wx:if="{{ !item.isDone }}" type="danger"
+              data-taskid="{{ item.taskId }}" bindtap="completeTask">完成任务</van-button>
+            <van-button class="btn-item" size="small" wx:else type="primary" icon="success" disabled>已完成</van-button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 学生完成任务的界面 -->
+    <van-overlay show="{{ showCompletePage }}">
+      <view class="wrapper">
+        <view class="card">
+          <view class="card-header">
+            <van-icon class="icon" name="cross" bindtap="onCompletePageHide" />
+          </view>
+          <van-divider contentPosition="center">填报阅读作业</van-divider>
+          <hg-editor bind:input="editorInput"></hg-editor>
+          <view class="center">
+            <van-button class="center-item" type="info" size="large" bindtap="submitTask">提交</van-button>
+          </view>
+        </view>
+      </view>
+    </van-overlay>
+  </view>
+
+</view>

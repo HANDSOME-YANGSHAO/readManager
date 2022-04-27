@@ -1,1 +1,102 @@
-/* pages/task/task.wxss */
+/* 公共居中样式 */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center-item {
+  width: 80%;
+}
+
+.task-container {
+  /* background-color: #111; */
+  height: 100vh;
+  --tabs-bottom-bar-color: #1296db;
+}
+
+/* 发布阅读任务 */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  width: 90%;
+  height: 95%;
+  background-color: rgba(255, 255, 255);
+  border-radius: 20rpx;
+}
+
+.card-header {
+  padding: 0 10rpx;
+  height: 70rpx;
+  font-size: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.submitTask {
+  position: absolute;
+  bottom: 20rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 90%;
+}
+
+/* 任务列表 */
+
+.taskList {
+  background-color: #f4f5f5;
+  padding: 0 30rpx;
+}
+
+.taskList-item {
+  margin: 40rpx 0;
+  padding: 20rpx 10rpx;
+  width: calc(100vw - 80rpx);
+  border-radius: 20rpx;
+  background-color: white;
+  box-shadow: 2rpx 2rpx 4rpx rgb(146, 143, 143);
+}
+
+.item-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.book-item {
+  width: 200rpx;
+  height: 340rpx;
+  margin: 10rpx 25rpx;
+}
+
+.cover {
+  width: 200rpx;
+  height: 290rpx;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 30rpx;
+  height: 60rpx;
+  text-align: center;
+  vertical-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.button_group {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-around;
+}

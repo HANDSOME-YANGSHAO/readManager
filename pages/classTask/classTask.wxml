@@ -1,0 +1,70 @@
+<!-- 作业列表 -->
+<scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: 100vh'
+  class="classTask-container">
+
+  <!-- 未完成作业名单 -->
+  <van-collapse value="{{ activeNames }}" bind:change="toDoListOpen">
+    <van-collapse-item title="未完成名单" name="0">
+      <view class="nameList">
+        <text class="studentName" wx:for="{{ taskInfo.toDoList }}" wx:key="userId">{{ item.userName }};</text>
+      </view>
+    </van-collapse-item>
+  </van-collapse>
+
+
+  <!-- 已完成列表 -->
+  <van-cell-group>
+    <van-cell title="已完成作业列表" value="检查阅读任务作业完成情况" />
+  </van-cell-group>
+  <view class="doneList-container">
+    <view class="doneItem card" wx:for="{{ taskInfo.doneList }}" wx:key="userId">
+      <view class="item-body">
+        <!-- 头像 -->
+        <view class="avatar">
+          <image wx:if="{{ item.role === '0' }}" src="../../assets/img/student.jpeg" class="avatar-open"></image>
+          <image wx:if="{{ item.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatar-open"></image>
+        </view>
+        <!-- 信息 -->
+        <view class="info">
+          <van-field placeholder="{{ item.userName }}" placeholder-style="color: black;" readonly label="姓名" />
+          <van-field placeholder="{{ item.role === '1' ? '班干部' : '学生'}}" placeholder-style="color: black;" readonly
+            label="职位" />
+        </view>
+      </view>
+      <!-- 操作 -->
+      <view class="item-operation">
+        <view class="operation-container">
+          <van-button wx:if="{{ !item.isChecked }}" round size="small" type="info" data-userid="{{ item.userId }}" bindtap="checkTask" block>检查作业
+          </van-button>
+          <van-button wx:else round size="small" icon="success" type="primary" data-userid="{{ item.userId }}"  bindtap="checkTask" block>已检查
+          </van-button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 任务检查界面的弹出层 -->
+  <van-overlay show="{{ showTaskDetail }}">
+    <view class="wrapper">
+      <view class="scard">
+        <van-divider contentPosition="center">作业详情</van-divider>
+        <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true'
+          style=' height: calc( 95vh - 240rpx )' class="scard-body">
+          <view class="ql-container">
+            <view class="ql-editor">
+              <rich-text nodes="{{ currentHomeWorkInfo.homeWorkContent }}"></rich-text>
+            </view>
+          </view>
+        </scroll-view>
+
+
+        <view class="confirmHomeWork">
+          <van-button type="primary" class="confirmButton" color="#1989FA" block round bindtap="onDetailClose">确认
+          </van-button>
+        </view>
+
+      </view>
+    </view>
+
+  </van-overlay>
+</scroll-view>

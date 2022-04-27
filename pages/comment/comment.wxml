@@ -1,0 +1,58 @@
+<!-- 发布评论 -->
+<view class="header">
+  <view class="submitComment">
+    <view class="avatar">
+      <image wx:if="{{ userInfo.role === '0' }}" src="../../assets/img/student.jpeg" class="avatarImage"></image>
+      <image wx:if="{{ userInfo.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatarImage"></image>
+      <image wx:if="{{ userInfo.role === '2' }}" src="../../assets/img/teacher.jpeg" class="avatarImage"></image>
+    </view>
+    <view class="commentInput">
+      <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: 200rpx'
+        class="comment-container">
+        <van-field model:value="{{ commentInputValue }}" type="textarea" autosize placeholder="点击输入评论"
+          border="{{ false }}" />
+      </scroll-view>
+    </view>
+  </view>
+  <view class="submit">
+    <van-button type="info" bindtap="submitComment">发布评论</van-button>
+  </view>
+</view>
+
+
+
+<!-- 评论列表容器 -->
+<view class="list-header">
+  所有评论
+</view>
+<scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 292rpx - 150rpx - 80rpx)'
+  class="commentList-container">
+  <view class="commentItem-container" wx:for="{{ commentList }}" wx:key="commentId">
+    <view class="commenItem">
+      <view class="avatar">
+        <image wx:if="{{ item.userInfo.role === '0' }}" src="../../assets/img/student.jpeg" class="avatarImage"></image>
+        <image wx:if="{{ item.userInfo.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatarImage"></image>
+        <image wx:if="{{ item.userInfo.role === '2' }}" src="../../assets/img/teacher.jpeg" class="avatarImage"></image>
+      </view>
+      <view class="commentInfo">
+        <view class="commentInfo_header">
+          <view wx:if="{{ item.userInfo.role === '2' }}" class="name">{{ item.userInfo.userName + '老师' }}</view>
+          <view wx:else class="name">{{ item.userInfo.classInfo[0].className + '-' + item.userInfo.userName }}</view>
+          <view class="publishTime">{{ item.publishTime }}</view>
+        </view>
+        <view class="commentInfo_content">{{ item.commentContent }}</view>
+      </view>
+    </view>
+    <view class="commentItem-foot">
+      <view class="icon-item" data-index="{{ index }}" data-commentid="{{ item.commentId }}" bindtap="onThumb">
+        <image wx:if="{{ item.isThumb }}" src="../../assets/img/thumb_success.png"></image>
+        <image wx:else src="../../assets/img/thumb.png"></image>
+        <view class="count">
+          <view class="text">{{ item.thumbNum }}</view>
+          <view class="text"></view>
+        </view>
+      </view>
+      <van-divider />
+    </view>
+  </view>
+</scroll-view>

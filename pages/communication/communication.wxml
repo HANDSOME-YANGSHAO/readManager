@@ -1,2 +1,60 @@
-<!--pages/communication/communication.wxml-->
-<text>pages/communication/communication.wxml</text>
+<view class="communication-container">
+  <!-- 动态列表 -->
+  <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: 100vh'
+    class="dynamicList">
+    <view class="dynamicListItem" wx:for="{{ articleList }}"  wx:key="articleId">
+      <!-- 文章头部 -->
+      <view class="header">
+        <view class="title">
+          {{ item.title }}
+        </view>
+        <view class="author">
+          <view class="avatar">
+            <image wx:if="{{ item.userInfo.role === '0' }}" src="../../assets/img/student.jpeg" class="avatar-open"></image>
+            <image wx:if="{{ item.userInfo.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatar-open"></image>
+            <image wx:if="{{ item.userInfo.role === '2' }}" src="../../assets/img/teacher.jpeg" class="avatar-open"></image>
+          </view>
+          <view class="baseInfo">
+            <view wx:if="{{ item.userInfo.role === '2' }}" class="name">{{ item.userInfo.userName + '老师' }}</view>
+            <view wx:else class="name">{{ item.userInfo.classInfo[0].className + '-' + item.userInfo.userName }}</view>
+            <view class="time">{{ item.publishTime }}</view>
+          </view>
+        </view>
+      </view>
+      <!-- 文章内容主体 -->
+      <view class="content">
+        <van-collapse value="{{ activeNames }}" bind:change="onContentOpen">
+          <van-collapse-item title="查看全部" name="{{ index }}">
+            <view class="ql-container">
+              <view class="ql-editor">
+                <rich-text nodes="{{ item.content }}"></rich-text>
+              </view>
+            </view>
+          </van-collapse-item>
+        </van-collapse>
+      </view>
+      <!-- 文章点赞评论区 -->
+      <view class="operations">
+        <view class="tip">给这篇文章点赞或评论~</view>
+        <view class="icons">
+          <view class="icon-item" data-index="{{ index }}" data-articleid="{{ item.articleId }}" bindtap="onThumb">
+            <image wx:if="{{ item.isThumb }}" src="../../assets/img/thumb_success.png"></image>
+            <image wx:else src="../../assets/img/thumb.png"></image>
+            <view class="count">
+              <view class="text">{{ item.thumbNum }}</view>
+              <view class="text"></view>
+            </view>
+          </view>
+          <view class="icon-item" data-articleid="{{ item.articleId }}" bindtap="goToComment">
+            <image src="../../assets/img/comment.png"></image>
+            <view class="count">
+              <view class="text">{{ item.commentNum }}</view>
+              <view class="text"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+</view>

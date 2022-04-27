@@ -1,0 +1,77 @@
+.classTask-container {
+  background-color: #f4f5f5;
+}
+
+.doneList-container {
+  padding: 0 30rpx;
+}
+.doneItem {
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+  padding: 15rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.item-body {
+  display: flex;
+  justify-content: space-around;
+}
+.item-operation {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100rpx;
+}
+.operation-container {
+  width: 80%;
+}
+.avatar-open {
+	width: 160rpx;
+  height: 160rpx;
+	clip-path: circle(80rpx at center);
+}
+
+/* 查看任务界面 */
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+ .scard {
+  position: relative;
+  width: 90vw;
+  height: 95vh;
+  background-color: rgba(255, 255, 255);
+  border-radius: 20rpx;
+}
+
+.confirmHomeWork {
+  position: absolute;
+  bottom: 20rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.confirmButton {
+  width: 90%;
+}
+
+/* rich-text 展现 editor 的内容不一致， 设置样式让其统一 */
+.ql-container {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-user-select: text;
+  user-select: text;
+  outline: none;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  min-height: 50px !important;
+  padding: 0 20rpx;
+}

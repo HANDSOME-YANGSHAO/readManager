@@ -1,0 +1,78 @@
+/* 发布评论 */
+.submitComment {
+  display: flex;
+  margin-top: 80rpx;
+}
+.submitComment .avatarImage {
+  width: 100rpx;
+  height: 100rpx;
+  clip-path: circle(50rpx at center);
+  margin-left: 20rpx;
+}
+.submitComment .commentInput {
+  margin-left: 20rpx;
+  width: 75vw;
+  height: 200rpx;
+  border: 6rpx solid #f4f5f5;
+  border-radius: 5%;
+}
+.submit {
+  padding-right: calc( 100vw - 120rpx - 75vw - 32rpx );
+  height: 150rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* 评论列表 */
+.list-header{
+  height: 80rpx;
+  padding-left: 20rpx;
+  font-size: 40rpx;
+  line-height: 60rpx;
+  font-weight: bolder;
+}
+.commentItem-container {
+  margin-top: 50rpx;
+}
+.commenItem {
+  display: flex;
+}
+.commenItem .avatarImage{
+  width: 100rpx;
+  height: 100rpx;
+  clip-path: circle(50rpx at center);
+  margin-left: 20rpx;
+}
+.commenItem .commentInfo {
+  width: calc( 100vw - 120rpx - 40rpx);
+  margin-left: 20rpx;
+}
+.commentInfo .commentInfo_header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 30rpx;
+  color: #515767;
+}
+.commentInfo .commentInfo_content {
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: rgba(51, 51, 51)
+}
+.icon-item {
+  margin: 20rpx 60rpx;
+  display: flex;
+  justify-content: flex-end;
+}
+.icon-item image {
+  width: 40rpx;
+  height: 40rpx;
+}
+.count {
+  height: 50rpx;
+}
+.count .text {
+  height: 25rpx;
+  font: 20rpx 微软雅黑, arial, Hiragino Sans GB, 宋体, sans-serif;
+  color: rgba(51, 51, 51, 0.5);
+}

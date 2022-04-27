@@ -7,12 +7,17 @@ Page({
     clientHeight: '',
     account: '',
     password: '',
-    radio: '0', // 0：学生 1：老师
+    radio: '0', // 0：学生 1：班干部 2:老师
   },
   onLoad() {
+    if (wx.getUserProfile) {
+      this.setData({
+        canIUseGetUserProfile: true
+      })
+    }
     var that = this
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         console.log(res.windowHeight)
         that.setData({
           clientHeight: res.windowHeight
@@ -41,8 +46,28 @@ Page({
         role: this.data.radio,
         account: "2018211822",
         userName: "李昊洋",
-        classNum: "04031802",
+        classInfo: [
+          {
+            classId: "04031802",
+            className: "二年级三班"
+          }
+        ],
         sex: "男",
+      }
+      // 造假测试
+      switch (account) {
+        case 'a':
+          // 学生账号
+          break;
+        case 'b':
+          // 老师账号
+          break;
+        case 'c':
+         // 班干部账号
+          break;
+        default:
+          FN.Toast('请输入正确的账号!')
+          return
       }
       if (res) {
         wx.setStorageSync('userInfo', res)

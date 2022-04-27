@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/bookshelf/bookshelf",
     "pages/communication/communication",
     "pages/task/task",
+    "pages/bookshelf/bookshelf",
     "pages/info/info",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/reader/reader"
+    "pages/reader/reader",
+    "pages/classTask/classTask",
+    "pages/comment/comment"
   ],
   "window": {
     "backgroundTextStyle": "light",

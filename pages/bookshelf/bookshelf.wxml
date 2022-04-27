@@ -4,38 +4,43 @@
     <!-- 搜索框 -->
     <van-search bind:change="searchInput" bind:search="search" model:value="{{ searchInput }}" placeholder="请输入书本名称" shape="round" input-align="center" />
 
-    <van-tabs bind:click="onTabClick" sticky swipeable animated>
+    <van-tabs bind:click="onTabClick" swipeable>
       <!-- 书架 -->
       <van-tab title="书架">
-        <view class="book-container">
-          <view class="book-item" wx:for="{{ allBook }}" wx:key="bookId" bindtap="goToBook">
-            <image class="cover" src="{{ item.coverSrc }}">
-            </image>
-            <view class="title">{{ item.bookName }}</view>
+        <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style='height: calc( 100vh - 98px)'>
+          <view class="book-container">
+            <view class="book-item" wx:for="{{ allBook }}" wx:key="bookId" data-bookid="{{ item.bookId }}" bindtap="goToBook">
+              <image class="cover" src="{{ item.coverSrc }}">
+              </image>
+              <view class="title">{{ item.bookName }}</view>
+            </view>
           </view>
-        </view>
+        </scroll-view>
       </van-tab>
       <!-- 班级书单 -->
       <van-tab title="班级书单">
-        <view class="class-booklist">
-          <view class="class-item" wx:for="{{ classBookList }}" wx:key="classId" wx:for-item="item">
-            <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;">
-              {{ item.className }}
-            </van-divider>
-            <view class="book-container">
-              <view class="book-item" bindtap="goToBook" wx:for="{{ item.bookList }}" wx:for-item="childItem" wx:key="bookId">
-                <image class="cover" src="{{ childItem.coverSrc }}">
-                </image>
-                <view class="title">{{ childItem.bookName }}</view>
-              </view>
-              <view class="book-item">
-                <view class="add" bindtap="addBook" data-classid="{{ item.classId }}">
-                  <van-icon name="plus" size="25px" />
+        <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style='height: calc( 100vh - 98px)'>
+          <view class="class-booklist">
+            <view class="class-item" wx:for="{{ classBookList }}" wx:key="classId" wx:for-item="item">
+              <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;">
+                {{ item.className }}
+              </van-divider>
+              <view class="book-container">
+                <view class="book-item" bindtap="goToBook" wx:for="{{ item.bookList }}" wx:for-item="childItem" wx:key="bookId" data-bookid="{{ childItem.bookId }}">
+                  <image class="cover" src="{{ childItem.coverSrc }}">
+                  </image>
+                  <view class="title">{{ childItem.bookName }}</view>
+                </view>
+                <view class="book-item">
+                  <view class="add" bindtap="addBook" data-classid="{{ item.classId }}">
+                    <van-icon name="plus" size="25px" />
+                  </view>
                 </view>
               </view>
             </view>
           </view>
-        </view>
+        </scroll-view>
+
         <van-popup round show="{{ addPopShow }}" position="bottom" custom-style="height: 50vh;" bind:close="onPopClose">
           <van-picker show-toolbar title="添加书籍" columns="{{ allBook }}" bind:cancel="onCancel" bind:confirm="onConfirm" visible-item-count="4" value-key="bookName" />
         </van-popup>
@@ -45,10 +50,10 @@
 
   <view wx:else>
     <van-divider contentPosition="center" customStyle="color: #1989fa; border-color: #1989fa; font-size: 18px;">
-     二年级三班
+      一年级五班
     </van-divider>
     <view class="book-container">
-      <view class="book-item" bindtap="goToBook" wx:for="{{ classBookShelf }}" wx:key="bookId">
+      <view class="book-item" bindtap="goToBook" wx:for="{{ classBookShelf }}" wx:key="bookId" data-bookid="{{ item.bookId }}">
         <image class="cover" src="{{ item.coverSrc }}">
         </image>
         <view class="title">{{ item.bookName }}</view>

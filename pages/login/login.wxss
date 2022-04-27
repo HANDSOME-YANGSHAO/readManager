@@ -46,7 +46,7 @@
 
 .main .avatar-open {
 	width: 180rpx;
-	height: 180rpx;
+  height: 180rpx;
 	clip-path: circle(90rpx at center);
 }
 

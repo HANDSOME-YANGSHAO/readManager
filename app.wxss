@@ -9,3 +9,11 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+
+
+/* 公共的卡片风格样式 */
+.card {
+  background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 2rpx 2rpx 4rpx rgb(146, 143, 143);
+}

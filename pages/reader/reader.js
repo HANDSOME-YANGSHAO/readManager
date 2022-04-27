@@ -1,4 +1,5 @@
 const FN = require("../../publicFn/public")
+const utils = require('../../utils/util.js')
 
 Page({
 
@@ -6,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    myScrollEvent: null,
     bookId: '',
     // 书本章节列表
     chapterList: [],
@@ -59,27 +61,8 @@ Page({
     })
   },
 
-  getScrollTop: function (event) {  //设置读取到文章的具体什么位置
-
-    // this.setData({
-    //   scrollTop: event.detail.scrollTop
-    // });
-    //存储读到章节的什么位置
-    wx.getStorage({
-      key: 'bookShelfData',
-      success: res => {
-        let data = res.data;
-        for (let i = 0; i < data.length; i++) {
-          if (this.data.book_id === data[i].bookInfo.id) {
-            data[i].laterScrollTop = event.detail.scrollTop;
-            wx.setStorage({
-              key: 'bookShelfData',
-              data: data,
-            })
-          }
-        }
-      },
-    });
+  getScrollTop: function(event) { //设置读取到文章的具体什么位置
+    this.data.myScrollEvent(event)
   },
 
   toggleDark: function() {
@@ -128,7 +111,7 @@ Page({
       } else {
         this.data.readerCss.backgroundColor = '#fff';
         this.data.readerCss.color = '#333';
-      }      
+      }
       this.setData({
         readerCss: this.data.readerCss
       });
@@ -172,8 +155,8 @@ Page({
       this.getChapterContent(this.data.chapterList[this.data.currentIndex].chapterId, this.data.currentIndex);
     }
     wx.setStorage({
-      key:"bookshelfData",
-      data:"value"
+      key: "bookshelfData",
+      data: "value"
     })
   },
 
@@ -207,10 +190,85 @@ Page({
       title: this.data.chapterList[currentIndex].title
     });
 
+    // 添加书本阅读记录本地缓存
+    let bookshelfData = wx.getStorage({
+      key: 'bookshelfData',
+      success: (res) => {
+        let this_book = res.data.find((item) =>
+          item.bookId === this.data.bookId
+        )
+        if (this_book) {
+          for (let obj of res.data) {
+            if (obj.bookId === this.data.bookId) {
+              obj.chapterId = chapterId
+              obj.currentIndex = currentIndex
+            }
+          }
+        } else {
+          res.data.push({
+            bookId: this.data.bookId,
+            chapterId: chapterId,
+            currentIndex: currentIndex
+          })
+        }
+        wx.setStorageSync('bookshelfData', res.data)
+      },
+      fail: (res) => {
+        let _bookshelfData = [{
+          bookId: this.data.bookId,
+          chapterId: chapterId,
+          currentIndex: currentIndex
+        }]
+        // console.log(_bookshelfData);
+        wx.setStorageSync('bookshelfData', _bookshelfData)
+      }
+    })
+
   },
 
   /* 初始化 */
   init() {
+    // 获取系统信息
+    wx.getSystemInfo({
+      success: (res) => {
+        var clientHeight = res.windowHeight,
+          clientWidth = res.windowWidth,
+          rpxR = 750 / clientWidth;
+        var calc = clientHeight * rpxR;
+        this.setData({
+          clientHeight: clientHeight,
+          clientWidth: clientWidth,
+          winHeight: calc
+        });
+        // console.log(this.data);
+      }
+    });
+
+    // 添加滚动条防抖事件
+    let myScrollEvent = (event) => {
+      // console.log('防抖滚动事件触发');
+      //存储读到章节的什么位置
+      wx.getStorage({
+        key: 'bookshelfData',
+        success: res => {
+          let data = res.data;
+          for (let obj of data) {
+            if (this.data.bookId === obj.bookId) {
+              obj.laterScrollTop = event.detail.scrollTop;
+              wx.setStorage({
+                key: 'bookshelfData',
+                data
+              })
+            }
+          }
+        },
+      });
+    }
+    myScrollEvent = utils.debounce(myScrollEvent, 100)
+    this.setData({
+      myScrollEvent
+    })
+
     console.log(`根据bookId:${this.data.bookId}发送请求，获取书本的章节列表`);
     const res = {
       bookId: '10',
@@ -237,24 +295,36 @@ Page({
     })
     // console.log(this.data.chapterList);
 
-    // 默认获取第一章
-    this.getChapterContent(this.data.chapterList[this.data.currentIndex].chapterId, this.data.currentIndex);
 
-    // 获取系统信息
-    wx.getSystemInfo({
+    // 查看是否有本地阅读缓存
+    wx.getStorage({
+      key: 'bookshelfData',
       success: (res) => {
-        var clientHeight = res.windowHeight,
-          clientWidth = res.windowWidth,
-          rpxR = 750 / clientWidth;
-        var calc = clientHeight * rpxR;
-        this.setData({
-          clientHeight: clientHeight,
-          clientWidth: clientWidth,
-          winHeight: calc
-        });
-        // console.log(this.data);
+        console.log('有缓存');
+        let this_book = res.data.find((item) =>
+          item.bookId === this.data.bookId
+        )
+        if (this_book) {
+          this.setData({
+            currentIndex: this_book.currentIndex
+          })
+          this.getChapterContent(this_book.chapterId, this_book.currentIndex);
+          if(this_book.laterScrollTop) {
+            this.setData({
+              scrollTop: this_book.laterScrollTop
+            })
+          }
+        } else {
+          // 默认获取第一章
+          this.getChapterContent(this.data.chapterList[this.data.currentIndex].chapterId, this.data.currentIndex);
+        }
+      },
+      fail: (res) => {
+        console.log('没缓存');
+        // 默认获取第一章
+        this.getChapterContent(this.data.chapterList[this.data.currentIndex].chapterId, this.data.currentIndex);
       }
-    });
+    })
 
     // 请求到数据显示页面
     this.setData({

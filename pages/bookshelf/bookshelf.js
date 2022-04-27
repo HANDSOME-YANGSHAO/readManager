@@ -16,9 +16,9 @@ Page({
     isTeacher: false
   },
   /* 前往书籍详情界面 */
-  goToBook() {
+  goToBook(e) {
     wx.navigateTo({
-      url: '/pages/reader/reader?bookId=10'
+      url: `/pages/reader/reader?bookId=${e.currentTarget.dataset.bookid}`
     })
   },
   /* 取消添加书籍 */
@@ -67,7 +67,7 @@ Page({
   },
   /* 页面初始化 */
   init() {
-    if (app.globalData.userInfo.role === '1') {
+    if (app.globalData.userInfo.role === '2') {
       console.log('发送请求，获取书架列表')
       console.log('发送请求，根据老师id请求班级书单列表')
       // 请求过来的假数据
@@ -132,14 +132,14 @@ Page({
       this.setData({
         // 学生数据
         classBookShelf: [{
-            bookId: '12',
-            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/49/31301049/t6_31301049.jpg',
-            bookName: '简爱'
+            bookId: '10',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/173/926173/t6_926173.jpg',
+            bookName: '红楼梦'
           },
           {
-            bookId: '13',
-            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/417/139417/t6_139417.jpg',
-            bookName: '三国演义'
+            bookId: '11',
+            coverSrc: 'https://wfqqreader-1252317822.image.myqcloud.com/cover/509/787509/t6_787509.jpg',
+            bookName: '钢铁是怎么炼成的'
           }
         ],
         isTeacher: false
