@@ -1,8 +1,11 @@
 <view class="communication-container">
+
+
+
   <!-- 动态列表 -->
-  <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: 100vh'
+  <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 44px )'
     class="dynamicList">
-    <view class="dynamicListItem" wx:for="{{ articleList }}"  wx:key="articleId">
+    <view class="dynamicListItem" wx:for="{{ articleList }}" wx:key="articleId">
       <!-- 文章头部 -->
       <view class="header">
         <view class="title">
@@ -10,9 +13,12 @@
         </view>
         <view class="author">
           <view class="avatar">
-            <image wx:if="{{ item.userInfo.role === '0' }}" src="../../assets/img/student.jpeg" class="avatar-open"></image>
-            <image wx:if="{{ item.userInfo.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatar-open"></image>
-            <image wx:if="{{ item.userInfo.role === '2' }}" src="../../assets/img/teacher.jpeg" class="avatar-open"></image>
+            <image wx:if="{{ item.userInfo.role === '0' }}" src="../../assets/img/student.jpeg" class="avatar-open">
+            </image>
+            <image wx:if="{{ item.userInfo.role === '1' }}" src="../../assets/img/classDadre.jpeg" class="avatar-open">
+            </image>
+            <image wx:if="{{ item.userInfo.role === '2' }}" src="../../assets/img/teacher.jpeg" class="avatar-open">
+            </image>
           </view>
           <view class="baseInfo">
             <view wx:if="{{ item.userInfo.role === '2' }}" class="name">{{ item.userInfo.userName + '老师' }}</view>
@@ -56,5 +62,27 @@
       </view>
     </view>
   </scroll-view>
+  <!-- 发布动态 -->
+  <view class="submitDynamics">
+    <van-cell title="点击发布动态" bindtap="onOverlayOpen">
+      <van-icon slot="right-icon" name="plus" class="custom-icon" />
+    </van-cell>
+  </view>
+  <!-- 发布阅读任务的遮罩层 -->
+  <van-overlay show="{{ showOverlay }}">
+    <view class="wrapper">
+      <view class="card">
+        <view class="card-header">
+          <van-icon class="icon" name="cross" bindtap="closeOverlay" />
+        </view>
+        <van-field model:value="{{ title }}" label="标题" type="textarea" placeholder="请输入标题" autosize />
+        <hg-editor bind:input="editorInput" placeholder="分享阅读心得~"></hg-editor>
+        <view class="submit">
+          <van-button type="primary" class="submitButton" color="#1989FA" block round bindtap="onSubmit">发布动态
+          </van-button>
+        </view>
+      </view>
+    </view>
 
+  </van-overlay>
 </view>

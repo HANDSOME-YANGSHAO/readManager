@@ -1,5 +1,6 @@
 const FN = require("../../publicFn/public")
 const app = getApp()
+const util = require('../../utils/util.js')
 
 Page({
 
@@ -9,6 +10,10 @@ Page({
   data: {
     activeNamesL: [], // 文章内容展开激活列表
     articleList: null, // 文章列表
+    showOverlay: false , // 发布动态的遮罩层
+    title: '', // 文章标题
+    content: '', // 文章主题内容,
+    editorInput: null, // 防抖事件函数
   },
 
   // 文章内容展开
@@ -40,6 +45,67 @@ Page({
     wx.navigateTo({
       url: `/pages/comment/comment?articleId=${e.currentTarget.dataset.articleid}`
     })
+  },
+
+  // 发布动态的遮罩层打开
+  onOverlayOpen() {
+    this.setData({
+      showOverlay: true
+    })
+  },
+
+  // 关闭遮罩层
+  closeOverlay() {
+    this.setData({
+      showOverlay: false
+    })
+  },
+
+  // 富文本编辑器
+  editorInput(e) {
+    this.data.editorInput(e);
+  },
+
+  // 发布动态
+  onSubmit() {
+    console.log(`根据文章标题 和 文章内容 以及 userId 去发送请求发布动态`);
+    const params = {
+      userId: app.globalData.userInfo.userId,
+      content: this.data.content,
+      title: this.data.title
+    }
+    console.log(params);
+    if(params.title === '') {
+      FN.Toast('标题不能够为空！');
+      return
+    }
+    if(params.content === '') {
+      FN.Toast('内容不能够为空！');
+      return
+    }
+
+    // 重新发送请求刷新动态列列表
+    const article = { // 假数据写了表示添加效果的
+      articleId: '91',
+      title: params.title,
+      publishTime: util.formatTime(new Date().getTime() / 1000, 'Y-M-D h:m'),
+      content: params.content,
+      userInfo: app.globalData.userInfo,
+      isThumb: false,
+      thumbNum: '0',
+      commentNum: '0'
+    }
+    let _articleList = this.data.articleList;
+    _articleList.unshift(article);
+    this.setData({
+      articleList: _articleList,
+      content: '',
+      title: ''
+    });
+    // console.log(this.data);
+
+    // 关闭发布动态界面
+    this.closeOverlay();
   },
 
   // 初始化函数
@@ -109,9 +175,22 @@ Page({
         commentNum: '4'
       }
     ]
+
+    // 生成防抖事件函数
+    let editorInput = (e) => {
+      console.log('触发');
+      this.setData({
+        content: e.detail.html
+      })
+    }
+    editorInput = util.debounce(editorInput, 100)
+
     this.setData({
-      articleList: res
+      articleList: res, // 列表数据
+      editorInput // 防抖事件函数
     })
+
+    console.log(this.data);
   },
 
   /**

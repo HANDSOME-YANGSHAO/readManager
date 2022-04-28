@@ -48,8 +48,8 @@ Page({
         userName: "李昊洋",
         classInfo: [
           {
-            classId: "04031802",
-            className: "二年级三班"
+            classId: "04031804",
+            className: "一年级五班"
           }
         ],
         sex: "男",
