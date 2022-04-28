@@ -1,2 +1,36 @@
-<!--pages/info/info.wxml-->
-<text>pages/info/info.wxml</text>
+<view class="info-container">
+
+  <!-- 信基本信息头 -->
+  <view class="header">
+    <view class="avatar">
+      <image wx:if="{{ userInfo.role === '0' }}" class="avatarImage" src="../../assets/img/student.jpeg"></image>
+      <image wx:if="{{ userInfo.role === '1' }}" class="avatarImage" src="../../assets/img/classDadre.jpeg"></image>
+      <image wx:if="{{ userInfo.role === '2' }}" class="avatarImage" src="../../assets/img/teacher.jpeg"></image>
+    </view>
+    <view class="name">
+      李昊洋
+    </view>
+  </view>
+
+  <view class="baseInfo">
+    <!-- 主题基本信息 -->
+    <van-field readonly value="{{ userInfo.account }}" label="账号" type="textarea" autosize />
+    <van-field wx:if="{{ userInfo.role === '0' || userInfo.role === '1' }}" readonly
+      value="{{ userInfo.classInfo[0].className }}" label="班级" type="textarea" autosize />
+    <van-field wx:if="{{ userInfo.role === '2'  }}" readonly value="{{ teacherClasses }}" label="班级" type="textarea"
+      autosize />
+    <van-field readonly value="{{ userInfo.sex }}" label="性别" type="textarea" autosize />
+    <van-field wx:if="{{ userInfo.role === '0' || userInfo.role === '1' }}" readonly
+      value="{{ userInfo.role === '1' ? '是' : '否' }}" label="班干部" type="textarea" autosize />
+    <van-cell title="点赞文章" is-link value="前往" bindtap="goToThumbList"/>
+    <view class="logout">
+      <van-button type="primary" class="logoutButton" color="#1989FA" block round bindtap="logout">退出登陆
+      </van-button>
+      <!-- 提示对话框 -->
+      <van-dialog use-slot title="是否退出登陆" show="{{ tipShow }}" show-cancel-button bind:confirm="onConfirm"
+        bind:cancel="onCancel">
+      </van-dialog>
+    </view>
+  </view>
+
+</view>

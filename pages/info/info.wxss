@@ -1,0 +1,40 @@
+.info-container {
+  height: 100vh;
+  /* background-color: #f4f5f5; */
+}
+
+.header {
+  background-color: #1296db;
+  display: flex;
+  height: 240rpx;
+}
+.header .avatarImage {
+	width: 180rpx;
+  height: 180rpx;
+  clip-path: circle(90rpx at center);
+  margin-left: 20rpx;
+}
+.header .name {
+  margin-left: 100rpx;
+  font-size: 40rpx;
+  color: white;
+  line-height: 180rpx;
+}
+
+.baseInfo {
+  margin-top: 50rpx;
+  height: calc( 100vh - 240rpx - 50rpx );
+  background-color: white;
+  position: relative;
+}
+
+.logout {
+  position: absolute;
+  bottom: 40rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.logoutButton {
+  width: 80%;
+}

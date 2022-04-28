@@ -11,6 +11,7 @@ App({
     userInfo: null,
     /* 数据服务器URL */
     // baseURL: '192.168.xxx.xxx:8080'
-    baseURL: 'https://api.zhuishushenqi.com'
+    baseURL: 'https://api.zhuishushenqi.com',
+    isThumbList: false, // 区别是否请求点赞文章列表
   }
 })

@@ -1,18 +1,75 @@
-// pages/info/info.js
+// 获取用户的基本信息
+const app = getApp();
+const FN = require('../../publicFn/public');
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    userInfo: null, // 用户的基本信息
+    teacherClasses: '', // 老师管理的班级
+    tipShow: false, // 提示对话框
+  },
 
+  // 前往点赞文章列表
+  goToThumbList() {
+    app.globalData.isThumbList = true;
+    wx.switchTab({
+      url: `/pages/communication/communication`
+    })
+  },
+
+  // 退出登陆
+  logout() {
+    this.setData({
+      tipShow: true
+    })
+  },
+
+  // 确认退出
+  onConfirm() {
+    this.setData({
+      tipShow: false
+    })
+    // 清空缓存
+    app.globalData.userInfo = null;
+    wx.setStorageSync('userInfo', null)
+    wx.reLaunch({
+      url: '/pages/login/login'
+    })
+  },
+
+  // 取消退出
+  onCancel() {
+    this.setData({
+      tipShow: false
+    })
+  },
+
+  // 初始化函数
+  init() {
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
+    if (this.data.userInfo.role === '2' && this.data.userInfo.classInfo.length != 0) {
+      let teacherClasses = '';
+      for (let item of this.data.userInfo.classInfo) {
+        teacherClasses = teacherClasses + item.className + ',';
+      }
+      console.log(teacherClasses);
+      this.setData({
+        teacherClasses
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.init();
   },
 
   /**

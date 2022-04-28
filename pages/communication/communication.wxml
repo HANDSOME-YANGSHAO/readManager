@@ -1,7 +1,4 @@
 <view class="communication-container">
-
-
-
   <!-- 动态列表 -->
   <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 44px )'
     class="dynamicList">
@@ -63,7 +60,7 @@
     </view>
   </scroll-view>
   <!-- 发布动态 -->
-  <view class="submitDynamics">
+  <view class="submitDynamics" wx:if="{{ isSubmitShow }}">
     <van-cell title="点击发布动态" bindtap="onOverlayOpen">
       <van-icon slot="right-icon" name="plus" class="custom-icon" />
     </van-cell>
