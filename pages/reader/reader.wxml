@@ -1,3 +1,4 @@
+
 <view wx:if="{{showPage}}" class='reader' style='background: {{readerCss.backgroundColor}};'>
   <!-- 阅读区域 -->
   <scroll-view bindtap='openMenu' scroll-with-animation='true' scroll-top='{{scrollTop}}' bindscroll='getScrollTop'
@@ -6,7 +7,7 @@
       {{ currentTitle }}
     </view>
     <view class='chapter_content'
-      style='font-size: {{readerCss.contentSize}}px;color: {{readerCss.color}};line-height:{{readerCss.lineHeight}}rpx; padding:20rpx;'>
+      style='font-size: {{readerCss.contentSize}}px;color: {{readerCss.color}}; line-height:{{readerCss.lineHeight}}rpx; padding:20rpx;'>
       <rich-text nodes="{{cpContent}}"></rich-text>
     </view>
     <view class='chapterLink'>
@@ -14,7 +15,6 @@
       <view bindtap='goNext' class="next" style='background: {{readerCss.iconBackgroundColor}}'>下一章</view>
     </view>
   </scroll-view>
-
   <!-- 菜单区域 -->
   <view wx:if="{{showMenu}}" class='menu'>
     <view bindtap='showChapter' class="chapterMenu">目录</view>
@@ -23,7 +23,6 @@
     <view bindtap='incSize' class='sizeInc'>Aa+</view>
     <view bindtap='toggleHuyan' class="huyan">{{isHuyan ? '正常' : '护眼'}}</view>
   </view>
-
   <!-- 目录区域 -->
   <scroll-view wx:if="{{showChapter}}" class='chapterContainer' style='height:{{winHeight}}rpx' scroll-y='true'>
     <view class='chapter_topic'>
@@ -33,5 +32,4 @@
     <view bindtap='pickChapter' data-currentindex="{{index}}" class='chapter_item' wx:key="chapterId"
       wx:for="{{chapterList}}">{{item.title}}</view>
   </scroll-view>
-
 </view>

@@ -11,8 +11,23 @@ Page({
     userInfo: null, // 用户的基本信息
     teacherClasses: '', // 老师管理的班级
     tipShow: false, // 提示对话框
+    fix: true, // 修复vant组件库bug
   },
-
+  // 退出登陆
+  logout() {
+    this.setData({
+      tipShow: true,
+      fix: false
+    })
+  },
+  // 取消退出
+  onCancel() {
+    this.setData({
+      fix: true,
+      tipShow: false
+    })
+  },
+  
   // 前往点赞文章列表
   goToThumbList() {
     app.globalData.isThumbList = true;
@@ -20,17 +35,10 @@ Page({
       url: `/pages/communication/communication`
     })
   },
-
-  // 退出登陆
-  logout() {
-    this.setData({
-      tipShow: true
-    })
-  },
-
   // 确认退出
   onConfirm() {
     this.setData({
+      fix: true,
       tipShow: false
     })
     // 清空缓存
@@ -40,14 +48,6 @@ Page({
       url: '/pages/login/login'
     })
   },
-
-  // 取消退出
-  onCancel() {
-    this.setData({
-      tipShow: false
-    })
-  },
-
   // 初始化函数
   init() {
     this.setData({

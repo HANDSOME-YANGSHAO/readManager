@@ -1,6 +1,6 @@
 <view class="communication-container">
   <!-- 动态列表 -->
-  <scroll-view scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 44px )'
+  <scroll-view scroll-top='{{scrollTop}}' scroll-with-animation='true' enable-back-to-top scroll-y='true' style=' height: calc( 100vh - 44px )'
     class="dynamicList">
     <view class="dynamicListItem" wx:for="{{ articleList }}" wx:key="articleId">
       <!-- 文章头部 -->

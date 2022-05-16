@@ -70,7 +70,7 @@ Page({
     if (app.globalData.userInfo.role === '2') {
       console.log('发送请求，获取书架列表')
       console.log('发送请求，根据老师id请求班级书单列表')
-      // 请求过来的假数据
+      // 请求过来的数据
       this.setData({
         // 老师数据
         allBook: [{

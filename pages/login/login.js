@@ -54,21 +54,21 @@ Page({
         ],
         sex: "男",
       }
-      // 造假测试
-      switch (account) {
-        case 'a':
-          // 学生账号
-          break;
-        case 'b':
-          // 老师账号
-          break;
-        case 'c':
-         // 班干部账号
-          break;
-        default:
-          FN.Toast('请输入正确的账号!')
-          return
-      }
+      // // 造假测试
+      // switch (account) {
+      //   case 'a':
+      //     // 学生账号
+      //     break;
+      //   case 'b':
+      //     // 老师账号
+      //     break;
+      //   case 'c':
+      //    // 班干部账号
+      //     break;
+      //   default:
+      //     FN.Toast('请输入正确的账号!')
+      //     return
+      // }
       if (res) {
         wx.setStorageSync('userInfo', res)
         app.globalData.userInfo = res

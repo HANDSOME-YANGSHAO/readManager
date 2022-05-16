@@ -14,7 +14,8 @@ Page({
     title: '', // 文章标题
     content: '', // 文章主题内容,
     editorInput: null, // 防抖事件函数
-    isSubmitShow: true // 显示发布文章按钮
+    isSubmitShow: true, // 显示发布文章按钮
+    scrollTop: 0 // 文章动态列表滚动条位置
   },
 
   // 文章内容展开
@@ -82,7 +83,7 @@ Page({
     }
     if (params.content === '') {
       FN.Toast('内容不能够为空！');
-      return
+      return  
     }
 
     // 重新发送请求刷新动态列列表
@@ -101,7 +102,8 @@ Page({
     this.setData({
       articleList: _articleList,
       content: '',
-      title: ''
+      title: '',
+      scrollTop: 0
     });
     // console.log(this.data);
 

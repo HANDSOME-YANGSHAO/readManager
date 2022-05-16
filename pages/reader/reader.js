@@ -197,7 +197,7 @@ Page({
         let this_book = res.data.find((item) =>
           item.bookId === this.data.bookId
         )
-        if (this_book) {
+        if (this_book) {  
           for (let obj of res.data) {
             if (obj.bookId === this.data.bookId) {
               obj.chapterId = chapterId
@@ -223,7 +223,6 @@ Page({
         wx.setStorageSync('bookshelfData', _bookshelfData)
       }
     })
-
   },
 
   /* 初始化 */

@@ -34,6 +34,10 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+
+    // 我的封装写法
+    const test = await HTTP.getCategory()
+    console.log(test);
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
